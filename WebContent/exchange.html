@@ -1,0 +1,252 @@
+            <!DOCTYPE html>
+            <html lang="en">
+
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                <title>二手交易</title>
+                <link rel="stylesheet" href="css/exchange.css">
+                <link rel="stylesheet" href="css/index.css">
+                <link rel="stylesheet" href="css/zui.min.css">
+                <link rel="stylesheet" href="css/base.css">
+                <script src="js/jquery.js"></script>
+                <script src="js/zui.min.js"></script>
+                <script>
+        $.post("/shixun/check", function(result){
+            var obj = $.parseJSON(result);
+            if(obj.msg == "success") {
+                var name = obj.data.name;
+                var str = "<span>欢迎您!</span>" + "<span class=\"admin\" style=\"font-size:15px;\">" + name + "</span>";
+                $(".nav-sign").empty().append(str);
+            }
+        });
+    </script>
+            </head>
+
+            <body>
+                <div class="head" align="center">
+                    <!-- <p>今天，你有想买卖的东西嘛？</p> -->
+                    <div class="img">
+                        <img src="images/head.png" alt="#" style="width: 1200px; height:200px;">
+                    </div>
+
+                </div>
+                <div class="main">
+
+                    <!-- nav -->
+
+                    <div class="navigate1">
+                        <div class="nav-topic">
+                            <ul class="nav nav-secondary">
+                                <li class="plat-name1"><a href="exchange.html">二手交易</a></li>
+                                <li><a href="first.html">首页</a></li>
+                                <li>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="activity.html">学生活动<span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="activity.html">社团风采活动</a></li>
+                                        <li><a href="activity.html">学校新闻</a></li>
+                                        <li><a href="activity.html">体育赛事</a></li>
+                                    </ul>
+                                </li>
+                                <li class="active">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="exchange.html">学校服务<span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="exchange.html">二手交易</a></li>
+                                        <li><a href="find.html">失物招领</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="index.html">校园风采<span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="index.html">教学楼</a></li>
+                                        <li><a href="index.html">宿舍</a></li>
+                                        <li><a href="index.html">食堂</a></li>
+                                        <li><a href="index.html">其他</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="communicate1.html">交友互动<span
+                                            class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="communicate1.html">生活</a></li>
+                                        <li><a href="communicate1.html">征婚</a></li>
+                                        <li><a href="communicate1.html">学习交流</a></li>
+                                        <li><a href="communicate1.html">其他</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="fatie.html">发帖</a></li>
+                            </ul>
+                        </div>
+                        <div class="nav-help">
+                            <div class="nav-search1">
+                                <div class="input-group">
+                                    <div class="input-control search-box search-box-circle has-icon-left has-icon-right search-example"
+                                        id="searchboxExample">
+                                        <input id="inputSearchExample3" type="search" class="form-control search-input"
+                                            placeholder="搜索">
+                                        <label for="inputSearchExample3" class="input-control-icon-left search-icon"><i
+                                                class="icon icon-search"></i></label>
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button">搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="nav-sign">
+                                <span class="user">欢迎您！游客</span>
+                                <span>您可以</span>
+                                <span><a href="register.html">注册</a></span>
+                                <span><a href="login.html">登录</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- nav end -->
+
+                    <!-- content -->
+                    <div class="container_content">
+                        <div class="content">
+                            <span class="pic"><img src="images/pic1.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">你怎么穿着品如的衣服t恤恶搞短袖情侣装回家的诱惑…</p>
+                                <span class="price">¥20.30元</span>
+                                <span class="number">10人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic2.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">耐克/NIKE Kobe 11 ZK11 科比夜光白马篮球鞋</p>
+                                <span class="price">¥550元</span>
+                                <span class="number">5人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic3.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">迪奥999唇釉高订唇膏色彩呈现舒悦而诱惑的缎光感妆效</p>
+                                <span class="price">¥90.00元</span>
+                                <span class="number">3人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic4.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">耐克小笑脸 不用懂穿搭 上身即是潮 感谢你我驾驭百搭单品</p>
+                                <span class="price">¥20元</span>
+                                <span class="number">20人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic5.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">BURBERRY/博柏利女包 迷你皮革 D 型环包</p>
+                                <span class="price">¥4000元</span>
+                                <span class="number">0人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic6.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">yeezy350 黑白 US9码 不议价 不交换 九五新 可面交</p>
+                                <span class="price">¥2480元</span>
+                                <span class="number">1人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic7.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">折叠圆形布质收纳垫地垫儿童爬爬垫宝宝爬行垫环保游…</p>
+                                <span class="price">¥25.50元</span>
+                                <span class="number">8人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic8.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">699入手的，本想自己学吉他买来的，一次没用过，基本全新。    </p>
+                                <span class="price">¥300元</span>
+                                <span class="number">0人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic10.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">正版LEGO樂高一批，自家玩具95新以上，由於搬家全部都打包</p>
+                                <span class="price">¥3400元</span>
+                                <span class="number">0人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <span class="pic"><img src="images/pic9.jpg" alt=""></span>
+                            <div class="all1">
+                                <p class="text2">LTL ，只要10.9元包邮抖音同款小黄鸭儿童玩具车惯性小</p>
+                                <span class="price">¥10.9元</span>
+                                <span class="number">0人想要</span>
+                                <div class="clr">
+                                    <p class="text">xmj123456</p>
+                                    <span class="text1">芝麻信用：极好</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content end -->
+                    <!-- page -->
+                    <div class="page">
+                        <ul class="pager pager-loose" style="text-align: center;">
+                            <li class="previous"><a href="your/nice/url">«</a></li>
+                            <li><a href="your/nice/url">1</a></li>
+                            <li class="active"><a href="your/nice/url">2</a></li>
+                            <li><a href="your/nice/url">3</a></li>
+                            <li><a href="your/nice/url">4</a></li>
+                            <li><a href="your/nice/url">5</a></li>
+                            <li class="next"><a href="your/nice/url">»</a></li>
+                        </ul>
+                    </div>
+                    <!-- page end -->
+
+                    <div class="footer1"></div>
+
+            </body>
+
+            </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/zui.min.css">
+    <link rel="stylesheet" href="css/tiezi.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script src="js/zui.uploader.min.js"></script>
+    <title>添加学生活动帖子</title>
+    <script>
+        //$("#file-upload").on("click", function () {
+            //$("#file-upload").submit();
+            // var topic = $("input[name=topic]").val();
+            // var title = $("input[name=title]").val();
+            // var description = $("textarea").val();
+            // var date = new Date();
+            //     var year = date.getFullYear();
+            //     var month = date.getMonth() + 1;
+            //     var day = date.getDay();
+            // var CurrentTime = year + "-" + month + "-" + day;
+            // /**
+            //     构造上传json
+            // */
+            // data = {
+            //     "topic" : topic,
+            //     "title" : title,
+            //     "description" : description,
+            //     "time" : CurrentTime
+            // };
+            // $.post("/shixun/tie",$.param(data), function(result){
+            //     // var obj = $.parseJSON(result);
+            //     // if(obj.msg == "success") {
+            //     //     $("upload-infor").addClass("success");
+            //     //     $("upload-infor").text("上传成功!");
+            //     // }else {
+            //     //     $("upload-infor").addClass("warning");
+            //     //     $("upload-infor").text("上传失败！");
+            //     // }
+            // });
+        // });
+    </script>
+</head>
+
+<body>
+    <form action="/shixun/upInter" method="post" enctype="multipart/form-data">
+        <div class="form-group fatie-topic">
+            <label for="topic" class="required">主题</label>
+            <input type="text" name="topic" class="form-control" id="exampleInputAccount8" placeholder="请输入主题名">
+        </div>
+        <div class="form-group fatie-title">
+            <label for="title" class="required">标题</label>
+            <input type="text" name="title" class="form-control" id="exampleInputPassword8" placeholder="请输入标题">
+        </div>
+        <div class="form-group fatie-description">
+            <label for="description" class="required">描述</label>
+            <textarea name="description" class="form-control" id="exampleInputPassword9" placeholder=""></textarea>
+        </div>
+        请选择文件(最多上传三张照片)：
+        <input type="file" name="fileupload"/>
+        <br>
+        <input type="file" name="fileupload"/>
+        <br>
+        <input type="file" name="fileupload"/>
+        <br>
+        <input type="submit" value="上传">
+    </form>
+</body>
+
+</html>

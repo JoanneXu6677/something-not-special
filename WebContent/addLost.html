@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/zui.min.css">
+    <link rel="stylesheet" href="css/tiezi.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script src="js/zui.uploader.min.js"></script>
+    <title>添加失物招领（寻物启事）帖子</title>
+</head>
+
+<body>
+    <form action="/shixun/addLost" method="POST">
+        <div class="form-group fatie-topic">
+            <label for="tz-type">类别</label>
+            <select class="tz-type" id="exampleInputAddress1">
+                <option value="寻物启事">寻物启事</option>
+                <option value="失物招领">失物招领</option>
+            </select>
+        </div>
+        <div class="form-group fatie-topic">
+            <label for="time" class="required">时间</label>
+            <input type="text" name="time" class="form-control" id="exampleInputAccount8" placeholder="格式:yyyy-mm-dd">
+        </div>
+        <div class="form-group fatie-title">
+            <label for="location" class="required">地点</label>
+            <input type="text" name="location" class="form-control" id="exampleInputPassword8" placeholder="">
+        </div>
+        <div class="form-group fatie-description">
+            <label for="description" class="required">描述</label>
+            <textarea class="form-control" name="description" id="description" placeholder=""></textarea>
+        </div>
+        <div class="uploader fatie-img" data-ride="uploader" data-url="/shixun/tie">
+            <div class="uploader-message text-center">
+                <div class="content"></div>
+                <button type="button" class="close">×</button>
+            </div>
+            <div class="uploader-files file-list file-list-lg" data-drag-placeholder="请拖拽文件到此处"></div>
+            <div class="uploader-actions">
+                <div class="uploader-status pull-right text-muted"></div>
+                <button type="button" class="btn btn-link uploader-btn-browse"><i class="icon icon-plus"></i>
+                    选择文件</button>
+                <button type="button" class="btn btn-link uploader-btn-start"><i class="icon icon-cloud-upload"></i>
+                    开始上传</button>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary">提交</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>stu</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>loginServlet</servlet-name>
+  	<servlet-class>com.share.servlet.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>loginServlet</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+ <servlet>
+  	<servlet-name>registerServlet</servlet-name>
+  	<servlet-class>com.share.servlet.registerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>registerServlet</servlet-name>
+  	<url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>checkServlet</servlet-name>
+  	<servlet-class>com.share.servlet.checkServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>checkServlet</servlet-name>
+  	<url-pattern>/check</url-pattern>
+  </servlet-mapping>
+ 
+ 	<servlet>
+  	<servlet-name>tieziServlet</servlet-name>
+  	<servlet-class>com.share.servlet.tieziServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>tieziServlet</servlet-name>
+  	<url-pattern>/tie</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>showLostServlet</servlet-name>
+  	<servlet-class>com.share.servlet.showLostServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>showLostServlet</servlet-name>
+  	<url-pattern>/showLost</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>pageIndexServlet</servlet-name>
+  	<servlet-class>com.share.servlet.pageIndexServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>pageIndexServlet</servlet-name>
+  	<url-pattern>/getIndex</url-pattern>
+  </servlet-mapping>
+ 
+ <servlet>
+  	<servlet-name>showFoundServlet</servlet-name>
+  	<servlet-class>com.share.servlet.showFoundServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>showFoundServlet</servlet-name>
+  	<url-pattern>/showFound</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>showInterServlet</servlet-name>
+  	<servlet-class>com.share.servlet.showInterServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>showInterServlet</servlet-name>
+  	<url-pattern>/showInter</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>upActivityServlet</servlet-name>
+  	<servlet-class>com.share.servlet.upActivityServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>upActivityServlet</servlet-name>
+  	<url-pattern>/upActivity</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>upInterServlet</servlet-name>
+  	<servlet-class>com.share.servlet.upInterServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>upInterServlet</servlet-name>
+  	<url-pattern>/upInter</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>logOutServlet</servlet-name>
+  	<servlet-class>com.share.servlet.logOutServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>logOutServlet</servlet-name>
+  	<url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>SuperLoginServlet</servlet-name>
+  	<servlet-class>com.share.servlet.SuperLoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SuperLoginServlet</servlet-name>
+  	<url-pattern>/SuperLogin</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>SelectUserServlet</servlet-name>
+  	<servlet-class>com.share.servlet.SelectUserServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SelectUserServlet</servlet-name>
+  	<url-pattern>/SelectUser</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>selectInterServlet</servlet-name>
+  	<servlet-class>com.share.servlet.selectInterServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>selectInterServlet</servlet-name>
+  	<url-pattern>/selectInter</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>DeleteUserServlet</servlet-name>
+  	<servlet-class>com.share.servlet.DeleteUserServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteUserServlet</servlet-name>
+  	<url-pattern>/deleteUser</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+  	<servlet-name>DeleteInterServlet</servlet-name>
+  	<servlet-class>com.share.servlet.DeleteInterServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteInterServlet</servlet-name>
+  	<url-pattern>/deleteInter</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ChangePasswordServlet</servlet-name>
+  	<servlet-class>com.share.servlet.ChangePasswordServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ChangePasswordServlet</servlet-name>
+  	<url-pattern>/changePass</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>SuperCheckServlet</servlet-name>
+  	<servlet-class>com.share.servlet.SuperCheckServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SuperCheckServlet</servlet-name>
+  	<url-pattern>/SuperCheck</url-pattern>
+  </servlet-mapping>
+  
+</web-app>

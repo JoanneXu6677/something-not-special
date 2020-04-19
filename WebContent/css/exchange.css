@@ -1,0 +1,149 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 1200px;
+ background: url(../images/bg8.jpg) ; 
+}
+
+.head{
+    width: 100%;
+    height:200px;
+    text-align: center;
+    margin: 0 auto;
+    /* background: #FFD948; */
+    /* background:rgba(255,217,72,0.9); */
+    
+}
+.img{
+    width: 1200px;
+    height: 200px;
+    margin: 0 auto;
+    /* background: rgb(255, 217,72); */
+}
+
+/* .head p{
+    font-size: 30px;
+    font-family: "微软雅黑";
+    font-weight: bolder;
+float: left;
+    margin: 0 auto;
+} */
+.navigate1 {
+    font-weight: 400;
+    margin: 5px auto;
+    width: 1200px;
+    height: 40px;
+    background-color: rgb(246, 247, 231);
+}
+.nav-search1 {
+    display: inline-block;
+    height: 38px;
+    width: 200px;
+    margin-right: 20px;
+}
+.plat-name1 {
+    padding-left: 20px;
+    font-family: lanqie;
+    font-size: 20px;
+    line-height: 20px;
+}
+.main{
+    margin: 0 auto;
+    width: 1200px;
+    height: 900px;
+    background-color:  rgb(246, 247, 231);  
+}
+/* .nav{
+    width: 1200px;
+    height: 40px;
+    background-color: aliceblue;
+    float: left;
+    margin: 0 auto;
+} */
+.container_content{
+
+    width: 1190px;
+    height: 700px;
+    margin: 0px 0px 30px 15px;
+}
+.content{
+    background: rgba(255, 255, 255, 0.6);
+    width: 225px;
+    height: 325px;
+    float: left;
+    margin: 10px 10px 0px 0px;
+    border-radius: 8px;
+
+}
+/* .content1{
+    background: #eee;
+    width: 225px;
+    height: 325px;
+    float: left;
+    margin: 30px 10px 0px 0px;
+    border-radius: 8px;
+
+} */
+
+.content .pic img{
+    margin: px 0px 0px px;
+    width: 225px;
+    height: 200px;
+}
+/* .content span img{
+    margin: 20px 10px 10px 20px;
+    width: 180px;
+    height: 150px;
+} */
+.page{
+    margin:20px auto;
+    width: 400px;
+    height: 40px;
+}
+.content .text2{
+    text-align: center;
+    margin: 5px auto;
+    font-family: "微软雅黑";
+    font-size:14px;
+}
+.price{
+    float: left;
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}
+.number{
+    float: right;
+    /* color:rgb(255, 217,72); */
+    font-size: 12px;
+    /* font-weight: bold; */
+
+}
+
+.clr{
+    width: 200px;
+    height: 40px;
+    float: left;
+    border-top:1px solid rgb(141, 100, 100); 
+    margin: 10px 5px 0px 8px;
+    padding-top:10px;
+    padding-left:0px; 
+}
+.all1{
+    width: 210px;
+    height: 140px;
+    margin: 5px 0px 0px 8px;
+}
+.clrr{
+    width: 1200px;
+    height: 300px;
+    rgba(255,255,255,0.6)
+    float: left;
+}
+.footer1{
+    width: 1200px;
+    height: 250px;
+    margin:0 auto;
+    border-top: solid;
+}

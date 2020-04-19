@@ -1,0 +1,156 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.head_content {
+    width: 100%;
+    height: 400px;
+    float: left;
+}
+
+.main_content {
+    width: 100%;
+    height: 550px;
+    margin: 0px auto;
+
+}
+.clearr{
+    width: 100%;
+    height: 500px;
+}
+.center233{
+ margin: 20px auto;
+    /* background: rgb(151, 53, 53); */
+    width: 1600px;
+    height: 550px;
+    padding: 10px 0px 0px 100px;
+}
+.center233 h1{
+    font-family: lanqie;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+.foot_content {
+    width: 100%;
+    height: 300px;
+    background: rgb(189, 221, 147);
+}
+
+.content_min {
+    width: 300px;
+    height: 450px;
+    /* background: rgb(212, 156, 156); */
+    float: left;
+    margin: 10px 10px 10px 10px;
+    padding-top:30px; 
+}
+
+
+.title4 {
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    float: left;
+    color: gray;
+
+    font-family: lanqie;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 10px 0px 10px;
+    background: rgb(253, 250, 250);
+}
+
+.title4 h3 {
+    color: gray;
+    font-family: lanqie;
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+    margin: 0px;
+}
+
+.title4 span {
+    float: right;
+    margin: 0px;
+
+}
+.content_min span{
+    width: 200px;
+    height: 200px;
+/* border-radius:450px;  */
+    /* border: dashed black; */
+    margin: 30px 0px 0px 50px;
+}
+.content_min h2{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 30px;
+}
+.content_min p{
+    text-align: center;
+    font-size: 18px;
+    margin: 20px 30px 0px 30px;
+    font-weight: bold;
+}
+.center233 a{
+    color:black;
+}
+.footer11 {
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+    background-color: white;
+    padding-left: 300px;
+}
+
+
+
+.footer-center11 {
+    width: 1400px;
+    height: 200px;
+    background-color:white;
+    margin: 0 auto;
+}
+
+.footer-center11 .address11 {
+    width: 595px;
+    height: 200px;
+    float: left;
+    color:gray;
+    background-color:white;
+    border-right: #98b8a1 solid;
+    margin-top:50px; 
+}
+
+.footer-center11 .shell11 {
+    width: 595px;
+    height: 130px;
+    float: left;
+    background-color:white;
+    color: gray;
+    margin-top:50px; 
+    margin-left: 50px;
+}
+.footer-center11 .shell11 .social11 a{
+    color: gray;
+    margin-left:40px; 
+    font-size: 16px;
+    margin-top:20px; 
+    font-weight: bold;
+}
+.footer-center11 .shell11  h3{
+    color: gray;
+    margin-left:40px; 
+    font-size: 20px;
+}
+.address11 h3{
+    font-size: 20px;
+
+}
+.address11 p{
+    font-size: 16px;
+    font-weight: bold;
+}

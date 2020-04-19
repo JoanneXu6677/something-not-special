@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>交友互动</title>
+	<link rel="stylesheet" type="text/css" href="css/zui.min.css" />
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/zui.min.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css">
+		.search-querybyuser {
+			width: 200px;
+		}
+
+		.data-table {
+			border: 1px soild #ccc;
+		}
+
+		.data-table thead {
+			font-size: 12px;
+			font-weight: bolder;
+			width: 100px;
+			background-color: #ccc;
+		}
+
+		.data-table thead th {
+			text-align: center;
+			height: 30px;
+			border: 1px solid #ccc;
+		}
+
+		.data-table tbody tr {
+			font-size: 12px;
+			font-weight: normal;
+			width: 100px;
+		}
+
+		.data-table tbody tr td {
+			text-align: center;
+			height: 30px;
+		}
+
+		.hover {
+			background-color: red;
+		}
+		tr:hover {
+			background-color: #eee;
+		}
+	</style>
+	<script>
+	$.post("/shixun/SuperCheck", function(result){
+	      var obj = $.parseJSON(result);
+	      if(obj.msg != "success") {
+	          window.location = "http://localhost:8080/shixun/houtaiLogin.html";
+	      }
+	  });
+		function deleteRow(btnDelete) {
+			var currentIndex = btnDelete.parentNode.parentNode.rowIndex;
+			var myTable = document.getElementById("myTable");
+			myTable.deleteRow(currentIndex);
+		}
+
+		//获取JSON长度
+        function getJsonLength(json) {
+            var jsonLength = 0;
+            for (var i in json) {
+                jsonLength++;
+            }
+            return jsonLength;
+        }
+		
+		//删除帖子
+        function deleteRow(btnDelete) {
+			var currentIndex = btnDelete.parentNode.parentNode.rowIndex;
+			var myTable = document.getElementById("myTable");
+			myTable.deleteRow(currentIndex);
+			//获取userid
+			var id = $($(btnDelete.parentNode).siblings("td")[0]).text();
+			var data = {
+				"actid" : id
+			};
+			//alert(id);
+			$.post("/shixun/deleteInter",$.param(data), function(result) {
+				var obj = $.parseJSON(result);
+				if(obj.msg == "success") {
+					alert("删除帖子成功！");
+				}else {
+					alert("删除帖子失败！");
+				}
+			});
+		}
+		//获取帖子
+		$(function(){
+			$("#selectInter").click(function(){
+				var id = $("input[name=id]").val();
+				// alert(id);
+				data = {
+					"actid" : id
+				}
+				// console.log(id);
+				$.post("/shixun/selectInter", $.param(data), function(result){
+					//alert(result);
+					var obj = $.parseJSON(result);
+					if(obj.msg == "success") {
+						var length = getJsonLength(obj.data);
+						var str = "";
+						for(var i = 0; i < length; i ++){
+							str += '<tr>' + 
+										'<td>' + obj.data[i].actId + '</td>' + 
+										'<td>' + obj.data[i].topic + '</td>' + 
+										'<td>' + obj.data[i].title + '</td>' + 
+										'<td>' + obj.data[i].description + '</td>' + 
+										'<td>' + obj.data[i].likeCount + '</td>' + 
+										'<td>' + obj.data[i].commentCount + '</td>' + 
+										'<td>' + obj.data[i].time + '</td>' + 
+										'<td>' + obj.data[i].userId + '</td>' + 
+										'<td><input type="button" value="删除" onclick="deleteRow(this)" /></td>' +
+									'</tr>';
+						}
+						$(".stu-data").empty().append(str);
+					}
+				})
+			})
+		})
+	</script>
+</head>
+
+<body>
+	<div class="search-querybyuser">
+		<div class="input-group">
+			<input type="text" name="id" class="form-control">
+			<span class="input-group-btn">
+				<button class="btn btn-default search" type="button" id="selectInter">搜索</button>
+			</span>
+		</div>
+	</div>
+	<div class="data">
+		<!-- HTML 代码 -->
+		<table cellpading="0" cellspace="0" width="100%" class="data-table" id="myTable">
+			<thead>
+				<tr>
+					<th>帖子ID号</th>
+					<th>主题</th>
+					<th>标题</th>
+					<th>说明文字</th>
+					<th>点赞数</th>
+					<th>评论数</th>
+					<th>时间</th>
+					<th>作者ID</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody class="stu-data">
+				<!-- <tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><input type="button" value="删除" onclick="deleteRow(this)" /></td>
+				</tr> -->
+			</tbody>
+		</table>
+	</div>
+	<ul class="pager" data-ride="pager" data-max-nav-count="6" data-page="1" data-rec-total="8"></ul>
+</body>
+
+</html>

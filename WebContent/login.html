@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎登陆</title>
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/zui.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/zui.js"></script>
+	<style type="text/css">
+		#error_box {
+			color : red;
+		}
+	</style>
+	<script>
+		function fnLogin() {
+			var username = $("#input1").val();
+			var pwd = $("#input2").val();
+			if(username.length == 0 || pwd.length == 0 ){
+				$("#error_box").empty().text("用户名和密码不能为空！");
+				return;
+			}
+			var data = {
+				"username": username,
+				"pwd": pwd
+			};
+			$.post("/shixun/login", $.param(data), function(result) {
+				// alert(result);
+				var obj = $.parseJSON(result);
+				if(obj.msg == "success") {
+					$("#error_box").css("color","green");
+					$("#error_box").empty().text("登陆成功！");
+					window.location = "http://localhost:8080/shixun/index.html";
+					return;
+				}
+				// alert("1111");
+				$("#error_box").empty().text(obj.msg);
+			});
+		}
+	</script>
+</head>
+
+<body>
+	<div class="l_container">
+		<div class="main">
+			<span class="left"><span>今天，你会去改变什么呢？</span>
+				<p><a href="http://127.0.0.1:8080/shixun/first.html">来平台进行交流吧</a> </p>
+			</span>
+			<span class="right">
+				<div class="img"><img src="images/img.jpg" alt=""></div>
+				<div class="refont">
+					<div class="input-control has-icon-left">
+						<input id="input1" type="text" class="form-control" placeholder="用户名" value="" />
+						<label for="inputAccountExample1" class="input-control-icon-left"><i
+								class="icon icon-user "></i></label>
+					</div>
+					<div class="clr">
+					</div>
+					<div class="input-control has-icon-left">
+						<input id="input2" type="password" class="form-control" placeholder="密码" />
+						<label for="inputAccountExample1" class="input-control-icon-left"><i
+								class="icon icon-key "></i></label>
+						<div class="clr" style="width: 350px; height: 30px;">
+						</div>
+						<div id="error_box"><br></div>
+						<button class="btn btn-block " type="button" style="background: #00CCFF; color: white;" value=""
+							onclick="fnLogin()">登&nbsp&nbsp&nbsp&nbsp&nbsp陆</button>
+					</div>
+					<div class="clr" style="width: 350px; height: 30px;"></div>
+					<span class="reigester">没有账号？点击这里<a href="register.html">注册</a></span>
+					<br>
+					<span class="reigester">你是管理员？点击这里<a href="houtaiLogin.html">后台管理</a></span>
+				</div>
+			</span>
+		</div>
+	</div>
+</body>
+
+</html>

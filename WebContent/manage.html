@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>管理系统</title>
+  <link rel="stylesheet" type="text/css" href="css/zui.min.css" />
+  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/zui.min.js" type="text/javascript" charset="utf-8"></script>
+  <style type="text/css">
+    .top {
+      height: 100px;
+      background-color: white;
+      font-family: "蓝枫芊柔";
+      font-size: 60px;
+      color: #666;
+    }
+
+    .center {
+      height: 800px;
+    }
+
+    .center .center-left {
+      width: 13%;
+      height: 800px;
+      float: left;
+    }
+
+    .center .center-right {
+      width: 87%;
+      height: 800px;
+      float: left;
+      border-left: solid 2px #ccc;
+    }
+  </style>
+  <script type="text/javascript">
+  $.post("/shixun/SuperCheck", function(result){
+      var obj = $.parseJSON(result);
+      if(obj.msg != "success") {
+          window.location = "http://localhost:8080/shixun/houtaiLogin.html";
+      }
+  });
+    $(function () {
+      $('#treeMenu').on('click', 'a', function () {
+        $('#treeMenu li.active').removeClass('active');
+        $(this).closest('li').addClass('active');
+      });
+      $(".menu-1 a").on("click",function () {
+        var txt = $(this).text();
+        if (txt == "交友互动") {
+          $(".center-right").load("queryByUser2.html");
+        }
+        if (txt == "用户查询") {
+          $(".center-right").load("queryByUser1.html");
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="top">校内信息共享平台管理系统</div>
+  <div class="center">
+    <div class="center-left">
+      <nav class="menu" data-ride="menu" style="width:198px">
+        <ul id="treeMenu" class="tree tree-menu" data-ride="tree">
+          <li class="manger_stu"><a href="#"><i class="icon icon-th"></i>文章管理</a>
+            <ul class="menu-1">
+              <li class="role-teacher"><a href="#">交友互动</a></li>
+              <li class="role-stu"><a href="#">学校服务</a></li>
+              <li class="role-stu"><a href="#">校园风采</a></li>
+              <li class="role-stu"><a href="#">学生活动</a></li>
+            </ul>
+
+          </li>
+          <li class="manger_teacher"><a href="#"><i class="icon icon-th"></i>用户管理</a>
+            <ul class="menu-1">
+              <li><a href="#">用户查询</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="center-right"></div>
+  </div>
+</body>
+
+</html>

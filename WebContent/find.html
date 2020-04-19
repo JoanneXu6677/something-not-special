@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>千与千寻</title>
+    <link rel="stylesheet" href="css/exchange.css">
+    <link rel="stylesheet" href="css/find.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/zui.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style>
+        p {
+            display: block;
+        }
+    </style>
+    <script src="js/jquery.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script>
+        $.post("/shixun/check", function (result) {
+            var obj = $.parseJSON(result);
+            if (obj.msg == "success") {
+                var name = obj.data.name;
+                var str = "<span>欢迎您!</span>" + "<span class=\"admin\" style=\"font-size:15px;\">" + name +
+                    "</span>";
+                $(".nav-sign").empty().append(str);
+            }
+        });
+        $(getFoundArticle(1));
+        $(getLostArticle(1));
+        /*
+        data参数含义：
+            tableName 所要找的表名
+        */
+        //获取失物招领分页数
+        dataLost = {
+            "tableName": "lost"
+        }
+        $.post("/shixun/getIndex", $.param(dataLost), function (result) {
+            var obj = $.parseJSON(result);
+            var str = "";
+            for (var i = 1; i <= obj.index; i++) {
+                str += '<li><a href="javascript:void(0);">' + i + '</a></li>';
+            }
+            $("#ul-lost").empty().append(str);
+            $("#ul-lost a").on("click", function () {
+                var index = this.innerHTML;
+                getLostArticle(index);
+            })
+        });
+
+        //获取寻物启事分页数
+        dataFound = {
+            "tableName": "found"
+        }
+        $.post("/shixun/getIndex", $.param(dataFound), function (result) {
+            var obj = $.parseJSON(result);
+            var str = "";
+            for (var i = 1; i <= obj.index; i++) {
+                str += '<li><a href="javascript:void(0);">' + i + '</a></li>';
+            }
+            $("#ul-found").empty().append(str);
+            $("#ul-found a").on("click", function () {
+                var index = this.innerHTML;
+                getFoundArticle(index);
+            })
+        });
+
+        //获取JSON长度
+        function getJsonLength(json) {
+            var jsonLength = 0;
+            for (var i in json) {
+                jsonLength++;
+            }
+            return jsonLength;
+        }
+
+        //获取一页失物招领帖子
+        function getLostArticle(index) {
+            data = {
+                "index": index
+            }
+            $.post("/shixun/showLost", $.param(data), function (result) {
+                //alert(result);
+                var obj = $.parseJSON(result);
+                if (obj.msg == "没有更多帖子了!") {
+                    $(".container_content0").empty().text("没有更多帖子了!");
+                } else if (obj.msg == "success") {
+                    var length = getJsonLength(obj.data);
+                    var str = "";
+                    for (i = 0; i < length; i++) {
+                        str += '<div class="content1">' +
+                            '<div class="all2">' +
+                            '<p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">' +
+                            obj.data[i].description + '</p>' +
+                            '<span class="space">' + obj.data[i].location + '</span>' +
+                            '<span class="time">' + obj.data[i].time + '</span>' +
+                            '<div class="clr0">' +
+                            '<p class="font_name">' +
+                            '拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>' +
+                            '<p class="text">' + obj.data[i].userId + '</p>' +
+                            '<br><p class="font_name1">取回方式</p>' +
+                            '<span class="text1">' + obj.data[i].contract + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '<span class="pic1"><img src="img/user/lost/' + obj.data[i].pcPath +
+                            '" alt=""></span>' +
+                            '</div>';
+                    }
+                    $(".container_content0").empty().append(str);
+                    // console.log(obj.data[0].location + " " + obj.data[0].description);
+                }
+            })
+        }
+
+        //获取一页寻物启事帖子
+        function getFoundArticle(index) {
+            data = {
+                "index": index
+            }
+            $.post("/shixun/showFound", $.param(data), function (result) {
+                // alert(result);
+                var obj = $.parseJSON(result);
+                if (obj.msg == "没有更多帖子了!") {
+                    $(".container_content0").empty().text("没有更多帖子了!");
+                } else if (obj.msg == "success") {
+                    var length = getJsonLength(obj.data);
+                    var str = "";
+                    for (i = 0; i < length; i++) {
+                        str += '<div class="content1">' +
+                            '<div class="all2">' +
+                            '<p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">' +
+                            obj.data[i].description + '</p>' +
+                            '<span class="space">' + obj.data[i].location + '</span>' +
+                            '<span class="time">' + obj.data[i].time + '</span>' +
+                            '<div class="clr0">' +
+                            '<p class="font_name">' +
+                            '失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>' +
+                            '<p class="text">wuyuting</p>' +
+                            '<p class="font_name1">联系方式:</p>' +
+                            '<span class="text1">' + obj.data[i].contract + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '<span class="pic1"><img alt="贴友暂未提供图片" src="img/user/found/' + obj.data[i].pcPath +
+                            '"></span>' +
+                            '</div>';
+                    }
+                    $(".container_content2").empty().append(str);
+                    // console.log(obj.data[0].location + " " + obj.data[0].description);
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="head1" align="center">
+        <!-- <p>今天，你有想买卖的东西嘛？</p> -->
+        <div class="img1">
+            <img src="images/3.gif" alt="" style="width: 1200px; height:200px;">
+        </div>
+
+    </div>
+    <div class="main1">
+
+        <!-- nav -->
+
+        <div class="navigate1">
+            <div class="nav-topic">
+                <ul class="nav nav-secondary">
+                    <li class="plat-name1"><a href="find.html">千与千寻</a></li>
+                    <li><a href="first.html">首页</a></li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="activity.html">学生活动<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="activity.html">社团风采活动</a></li>
+                            <li><a href="activity.html">学校新闻</a></li>
+                            <li><a href="activity.html">体育赛事</a></li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="exchange.html">学校服务<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="exchange.html">二手交易</a></li>
+                            <li><a href="find.html">失物招领</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="index.html">校园风采<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html">教学楼</a></li>
+                            <li><a href="index.html">宿舍</a></li>
+                            <li><a href="index.html">食堂</a></li>
+                            <li><a href="index.html">其他</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="communicate1.html">交友互动<span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="communicate1.html">生活</a></li>
+                            <li><a href="communicate1.html">征婚</a></li>
+                            <li><a href="communicate1.html">学习交流</a></li>
+                            <li><a href="communicate1.html">其他</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="fatie.html">发帖</a></li>
+                </ul>
+            </div>
+            <div class="nav-help">
+                <div class="nav-search1">
+                    <div class="input-group">
+                        <div class="input-control search-box search-box-circle has-icon-left has-icon-right search-example"
+                            id="searchboxExample">
+                            <input id="inputSearchExample3" type="search" class="form-control search-input"
+                                placeholder="搜索">
+                            <label for="inputSearchExample3" class="input-control-icon-left search-icon"><i
+                                    class="icon icon-search"></i></label>
+                        </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="nav-sign">
+                    <span class="user">欢迎您！游客</span>
+                    <span>您可以</span>
+                    <span><a href="register.html">注册</a></span>
+                    <span><a href="login.html">登录</a></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- nav end -->
+
+        <!-- content -->
+
+        <!-- 失物招领 -->
+        <span class="title0">失物招领</span>
+        <div class="container_content0">
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        一只深蓝色天堂伞不知道被哪位同学拿错了</p>
+                    <span class="space">综教c305</span>
+                    <span class="time">6.21下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">联系电话：</p>
+                        <span class="text1">18229908040</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find1.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        今天捡到一位帅哥的身份证，请速速来取</p>
+                    <span class="space">甘怡一楼</span>
+                    <span class="time">6.25</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xnshhh</p>
+                        <p class="font_name1">取回方式：</p>
+                        <span class="text1">甘怡一楼</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find3.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        &nbsp;&nbsp;&nbsp;眼镜盒不知道谁落在这里了&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">12教410</span>
+                    <span class="time">6.21下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">yy123456</p>
+                        <p class="font_name1">取回方式：</p>
+                        <span class="text1">原地自取</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find4.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        学生证 经济管理学院王同学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <span class="space">综教A305</span>
+                    <span class="time">6.20</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">联系电话：</p>
+                        <span class="text1">19873516108</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find5.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        校园卡
+                        （许杰交运16级）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">甘怡二楼</span>
+                    <span class="time">6.19下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">zzrhhh</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">2995501270</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find7.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        公交卡
+                        在小白上面捡到的&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">小白</span>
+                    <span class="time">6.14下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">hhhhhh</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">992668470</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find8.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        黑色耳机 比较新
+                        失主速速来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">12教111</span>
+                    <span class="time">6.17晚上</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">取回方式：</p>
+                        <span class="text1">原地自取</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find10.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        捡到一只口红 ，失主可以来认领一下&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <span class="space">西门小绿</span>
+                    <span class="time">6.21下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">1047606513</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find12.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        一份设计论文资料袋&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">汀香三楼茶语奶香</span>
+                    <span class="time">6.14</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">取回方式：</p>
+                        <span class="text1">失主到茶语奶香自取</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find13.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 钥匙 不知道哪位同学落下了&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <span class="space">十二教508</span>
+                    <span class="time">6.14下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            拾到者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">联系电话：</p>
+                        <span class="text1">13607363665</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find14.jpg" alt=""></span>
+            </div>
+        </div>
+
+        <!-- 失物招领结束 -->
+        <div class="clear1"></div>
+        <div class="page1">
+            <ul class="pager pager-loose" style="text-align: center;" id="ul-lost">
+                <li class="previous"><a href="your/nice/url">«</a></li>
+                <li><a href="your/nice/url">1</a></li>
+                <li class="active"><a href="your/nice/url">2</a></li>
+                <li><a href="your/nice/url">3</a></li>
+                <li><a href="your/nice/url">4</a></li>
+                <li><a href="your/nice/url">5</a></li>
+                <li class="next"><a href="your/nice/url">»</a></li>
+            </ul>
+        </div>
+        <!-- 寻物启事 -->
+        <div class="clear"></div>
+        <span class="title1">寻物启事</span>
+        <div class="container_content2">
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        施华洛世奇小蜜蜂手链，麻烦看到的同学联系我</p>
+                    <span class="space">西苑二到三教的路上</span>
+                    <span class="time">6.27上午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p class="text">zqfhhh</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">2039945970</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find2.png" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        一把遮阳伞
+                        不小心落在食堂了&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">汀香二楼</span>
+                    <span class="time">6.18下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p class="text">zz66666</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">156465422</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find6.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        我丢了一副眼镜，不知道有没有练车的同学捡到</p>
+                    <span class="space">北门</span>
+                    <span class="time">6.17下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">enenen</p>
+                        <p class="font_name1">联系电话：</p>
+                        <span class="text1">15267889996</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find9.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        我是在一周前丢了钥匙，上面一个u盘，16G黑色外壳加橘色边框</p>
+                    <span class="space">校园</span>
+                    <span class="time">6.10</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">tt123456</p>
+                        <p class="font_name1">联系电话：</p>
+                        <span class="text1">15802578843</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find11.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 苹果耳机 现在急用
+                        非常感谢&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                    <span class="space">12教410</span>
+                    <span class="time">6.12上午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">eiei1122</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">2134394087</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find15.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        一只钢笔，是LAMY和布朗熊的联名款，是非常重要的人送的</p>
+                    <span class="space">综教c305</span>
+                    <span class="time">6.21下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            丢失者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p class="text">yyhhhh</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">1370672590</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find16.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        深灰色的弯柄长伞 手柄木头特制&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <span class="space">图书馆上楼右侧放伞处</span>
+                    <span class="time">6.12下午</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            丢失者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p class="text">wsbdsg</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">178980761</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find17.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        书包 深蓝色的三叶草 内有三本书加一个水杯</p>
+                    <span class="space">工一附近</span>
+                    <span class="time">6.11</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">hhhhhh</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">1105044420</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find18.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;红色保温杯
+                        内带过滤网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                    <span class="space">图书馆进门左边第一个自习室</span>
+                    <span class="time">6.11</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            丢失者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">xmj123456</p>
+                        <p class="font_name1">联系qq：</p>
+                        <span class="text1">1148357292</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find20.jpg" alt=""></span>
+            </div>
+            <div class="content1">
+                <div class="all2">
+                    <p class="text2" style="font-weight: bold; color: black;text-align: center;font-size: 14px;">
+                        身份证以及卡包 都是很重要的东西，拜托了，要是找到了请喝奶茶</p>
+                    <span class="space">校园</span>
+                    <span class="time">6.6</span>
+                    <div class="clr0">
+                        <p class="font_name">
+                            失物者：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <p class="text">wuyuting</p>
+                        <p class="font_name1">联系电话：</p>
+                        <span class="text1">18807470835</span>
+                    </div>
+                </div>
+                <span class="pic1"><img src="images/find21.jpg" alt=""></span>
+            </div>
+        </div>
+
+        <!-- 寻物启事结束 -->
+
+        <!-- content end -->
+        <!-- page -->
+        <div class="clear1"></div>
+        <div class="page1">
+            <ul class="pager pager-loose" style="text-align: center;" id="ul-found">
+                <li class="previous"><a href="your/nice/url">«</a></li>
+                <li><a href="your/nice/url">1</a></li>
+                <li class="active"><a href="your/nice/url">2</a></li>
+                <li><a href="your/nice/url">3</a></li>
+                <li><a href="your/nice/url">4</a></li>
+                <li><a href="your/nice/url">5</a></li>
+                <li class="next"><a href="your/nice/url">»</a></li>
+            </ul>
+        </div>
+        <!-- page end -->
+
+        <div class="footer1"></div>
+
+</body>
+
+</html>

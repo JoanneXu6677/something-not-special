@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎注册</title>
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/zui.css">
+	<link rel="stylesheet" href="css/register.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/zui.js"></script>
+	<script>
+		function fnLogin() {
+			var oUname = $("#name").val();
+			var oUpass = $("#password").val();
+			var oError = $("#error_box").val();
+			var oUemail = $("#email").val();
+			var gender = $("#gender").val();
+			var isError = true;
+			var emailReg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); 
+			if (oUname.length > 20 || oUname.length < 3) {
+				$("#error_box").text("用户名请输入3-20位字符");
+				isError = false;
+				return;
+			}
+			if (oUpass.length > 20 || oUpass.length < 6) {
+				$("#error_box").text("密码请输入6-20位字符");
+				isError = false;
+				return;
+			}
+			if(!emailReg.test(oUemail)) {
+				$("#error_box").text("邮箱格式不合法！");
+				return;
+			}
+			data = {
+				"name" : oUname,
+				"email" : oUemail,
+				"gender" : gender,
+				"pwd" : oUpass
+			}
+			// window.alert(oUname+","+oUpass+","+oUemail+","+gender);
+			$.post("/shixun/register", $.param(data), function(result){
+				var obj = $.parseJSON(result);
+				if(obj.msg == "success"){
+					$("#error_box").css("color","green");
+					$("#error_box").text("注册成功！");
+					window.location = "http://localhost:8080/shixun/login.html";
+				}else if(obj.msg == "用户名已存在！"){
+					$("#error_box").text("用户名已存在！");
+				}
+				else{
+					$("#error_box").css("color","red");
+					$("#error_box").text("注册失败！");
+				}
+			})
+		}
+	</script>
+</head>
+<body>
+	<div class="l_container">
+		<div class="main">
+			<span class="left"><span>今天，是否过得愉快呢？</span>
+			<p>来平台进行分享吧</p>
+		</span>
+		<span class="right">
+			<div class="img"><img src="images/img.jpg" alt=""></div>
+			<div class="refont">
+				<div class="input-control has-icon-left">
+					<input id="email" type="text" class="form-control" placeholder="请输入您的邮箱">
+					<label for="inputAccountExample1" class="input-control-icon-left"><i class="icon icon-envelope-alt"></i></label></div>
+					<div class="clr1"></div>
+					<div class="input-control has-icon-left">
+						<input id="name" type="text" class="form-control" placeholder="请输入新用户名" value="">
+						<label for="inputAccountExample1" class="input-control-icon-left"><i class="icon icon-user "></i></label></div>
+						
+						<div class="clr1">
+						</div>
+						<div class="input-control has-icon-left">
+							<input id="password" type="password" class="form-control" placeholder="请输入密码" value="">
+							<label for="inputAccountExample1" class="input-control-icon-left"><i class="icon icon-key "></i></label></div>
+							<div class="clr1">
+							</div>
+							<div class="gender" style="text-align: left;" >
+								<select name="gender" id="gender" style="width: 340px; height: 30px;text-align: center;border-radius: 5px; border-style: gray; color: gray;">
+								<option id="chose" selected="selected"  >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp请选择性别</option>
+                                <option id="male" value="0">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp男</option>
+                                <option id="female" value="1">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp女</option>
+								</select>
+							</div>
+							<div class="clr1">
+							</div>
+							<div class="clr1">
+							</div>
+							<div id="error_box"><br></div>
+							<button class="btn btn-block " type="button" style="background: #00CCFF; color: white;" onclick="fnLogin()">注&nbsp&nbsp&nbsp&nbsp&nbsp册</button>
+						</div>
+						<div class="clr1">
+						</div>
+						<div class="clr1"></div>
+						<span class="reigester">已有账号？点击这里<a href="login.html">登陆</a></span>
+					</div>
+				</span>
+			</div>
+		</div>
+	</body>
+	</html>

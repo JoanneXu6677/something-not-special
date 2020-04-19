@@ -1,0 +1,188 @@
+ul,
+li {
+    list-style: none;
+}
+body {
+    background-color: #eee;
+}
+@font-face {
+    font-family: lanqie;
+    src: url('../fonts/蓝枫芊柔.ttf'); /* IE9+ */
+}
+.plat-name {
+    font-family: lanqie;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.top {
+    width: 1190px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.navigate {
+    font-weight: 400;
+    margin: 0 auto;
+    width: 1190px;
+    height: 40px;
+    background-color: rgb(246, 247, 231);
+}
+
+.nav-topic {
+    width: 710px;
+    float: left;
+}
+
+.nav-help {
+    width: 480px;
+    float: right;
+    height: 38px;
+    border-bottom: 2px solid #e5e5e5
+}
+
+.nav-search {
+    display: inline-block;
+    height: 38px;
+    width: 200px;
+    margin-right: 5px;
+}
+
+.nav-sign {
+    display: inline-block;
+    height: 40px;
+    width: 220px;
+}
+
+.nav-sign span {
+    margin-left: 10px;
+    font-size: 13px;
+    float: left;
+    line-height: 40px;
+}
+
+.center {
+    width: 1190px;
+    margin: 20px auto;
+    height: 600px;
+}
+
+#myNiceCarousel img {
+    width: 1190px;
+    height: 600px;
+}
+
+.footer {
+    width: 1190px;
+    height: 230px;
+    margin: 0 auto;
+    background-color: #2578B0;
+}
+
+.footer .friend-link {
+    text-align: center;
+    width: 1190px;
+    height: 80px;
+    color: #fff;
+}
+
+.friend-link .friend-title {
+    font-size: 22px;
+    background-color: #2578B0;
+    height: 50px;
+}
+
+.friend-link .link-name {
+    height: 30px;
+    background-color: #0d69a8;
+}
+
+.footer-center {
+    width: 1190px;
+    height: 130px;
+    background-color: #2578B0;
+}
+
+.footer-center .address {
+    width: 595px;
+    height: 130px;
+    float: left;
+    color: white;
+    background-color: #2578B0;
+    border-right: #98b8a1 solid;
+}
+
+.footer-center .shell {
+    width: 595px;
+    height: 130px;
+    float: left;
+    background-color: #2578B0;
+    color: white;
+}
+
+.link-name ul {
+    display: block;
+    width: 600px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+
+.link-name li {
+    display: block;
+    width: 120px;
+    height: 20px;
+    margin: 5px 10px;
+    float: left;
+}
+
+.chrick {
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    width: 1190px;
+    height: 20px;
+    background-color: #0d69a8;
+}
+.social {
+    width: 100%;
+}
+.social a {
+    display: block;
+    width: 60px;
+    height: 70px;
+    float: left;
+    margin: 5px 40px;
+    background-color: #2578B0;
+}
+.social-img {
+    width: 50px;
+    height: 50px;
+    margin:0 auto;
+}
+.social-img img {
+    width: 50px;
+    height: 50px;
+}
+.social-name {
+    text-align: center;
+    font-size: 15px;
+    color: white;
+}
+.shell h3 {
+    display: block;
+    width: 60px;
+    margin: 14px 15px;
+}
+.address h3 {
+    display: block;
+    width: 70px;
+    margin: 14px 15px;
+    font-size: 12px;
+    font-weight: 300;
+}
+.address p {
+    display: block;
+    width: 560px;
+    margin: 5px auto;
+    font-size: 15px;
+}

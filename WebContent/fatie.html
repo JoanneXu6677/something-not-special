@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/zui.min.css">
+    <link rel="stylesheet" href="css/base1.css">
+    <link rel="stylesheet" href="css/tiezi.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/zui.min.js"></script>
+    <script src="js/zui.uploader.min.js"></script>
+    <title>发布帖子</title>
+    <script>
+        $(function () {
+            $(".change-exchange").on("click", function () {
+                $("#form-tiezi").load("addGoods.html");
+            });
+            $(".change-lost").on("click", function () {
+                $("#form-tiezi").load("addLost.html");
+            });
+            $(".change-activity").on("click", function () {
+                $("#form-tiezi").load("addActivity.html");
+            });
+            $(".change-inter").on("click", function () {
+                $("#form-tiezi").load("addInter.html");
+            });
+        });
+    </script>
+    <script>
+        $.post("/shixun/check", function (result) {
+            var obj = $.parseJSON(result);
+            if (obj.msg == "success") {
+                var name = obj.data.name;
+                var str = "<span>欢迎您!</span>" + "<span class=\"admin\" style=\"font-size:15px;\">" + name +
+                    "</span>";
+                $(".nav-sign").empty().append(str);
+            } else {
+                $("#classify").css("display", "none");
+                $(".center").css("height", "600px");
+                $("#form-tiezi").text("请先登录，再发帖！");
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="top">
+        <img src="img/top1.jpg" alt="" srcset="">
+    </div>
+    <div class="navigate">
+        <div class="nav-topic">
+            <ul class="nav nav-secondary">
+                <li class="plat-name"><a href="first.html">校内信息共享平台</a></li>
+                <li><a href="first.html">首页</a></li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="activity.html">学生活动<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html">社团风采活动</a></li>
+                        <li><a href="activity.html">学校新闻</a></li>
+                        <li><a href="activity.html">体育赛事</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="exchange.html">学校服务<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="exchange.html">二手交易</a></li>
+                        <li><a href="find.html">失物招领</a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="index.html">校园风采<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">教学楼</a></li>
+                        <li><a href="index.html">宿舍</a></li>
+                        <li><a href="index.html">食堂</a></li>
+                        <li><a href="index.html">其他</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="activity.html">交友互动<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="communicate1.html">生活</a></li>
+                        <li><a href="communicate1.html">征婚</a></li>
+                        <li><a href="communicate1.html">学习交流</a></li>
+                        <li><a href="communicate1.html">其他</a></li>
+                    </ul>
+                </li>
+                <li><a href="fatie.html">发帖</a></li>
+            </ul>
+        </div>
+        <div class="nav-help">
+            <div class="nav-search">
+                <div class="input-group">
+                    <div class="input-control search-box search-box-circle has-icon-left has-icon-right search-example"
+                        id="searchboxExample">
+                        <input id="inputSearchExample3" type="search" class="form-control search-input"
+                            placeholder="搜索">
+                        <label for="inputSearchExample3" class="input-control-icon-left search-icon"><i
+                                class="icon icon-search"></i></label>
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">搜索</button>
+                    </span>
+                </div>
+            </div>
+            <div class="nav-sign">
+                <span class="user">欢迎您！游客</span>
+                <span>您可以</span>
+                <span><a href="register.html">注册</a></span>
+                <span><a href="login.html">登录</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div class="center-tiezi">
+            <div class="dropdown dropdown-hover" id="classify">
+                <label class="required">帖子类别</label>
+                <br>
+                <button class="btn" type="button" data-toggle="dropdown">选择帖子类别 <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li class="change-activity"><a href="javascript:void()">学生活动</a> </li>
+                    <li class="change-exchange"><a href="javascript:void()">二手交易</a> </li>
+                    <li class="change-lost"><a href="javascript:void()">失物招领</a> </li>
+                    <li class="change-inter"><a href="javascript:void()">交友互动</a> </li>
+                </ul>
+            </div>
+            <div id="form-tiezi">
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-center">
+            <div class="address">
+                <h3>学校邮编</h3>
+                <p>云塘校区地址：湖南省长沙市（天心区）万家丽南路2段960号 邮编：410114</p>
+                <p>金盆岭校区地址：湖南省长沙市（天心区）赤岭路45号 邮编：410076</p>
+            </div>
+            <div class="shell">
+                <h3>友情链接</h3>
+                <div class="social">
+                    <a href="">教务管理系统</a>
+                    <a href="">网络教学平台</a>
+                    <a href="">英语视听说</a>
+                    <a href="">长理官网</a>
+                </div>
+            </div>
+        </div>
+        <div class="chrick">
+            长理校内信息分享平台，你的网上大学生活圈
+        </div>
+    </div>
+</body>
+
+</html>

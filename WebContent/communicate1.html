@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/zui.min.css">
+    <link rel="stylesheet" href="css/base1.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/zui.min.js"></script>
+    <title>交友互动</title>
+    <script>
+        //判断登录状态
+        $.post("/shixun/check", function (result) {
+            var obj = $.parseJSON(result);
+            if (obj.msg == "success") {
+                var name = obj.data.name;
+                var str = "<span>欢迎您!</span>" + "<span class=\"admin\" style=\"font-size:15px;\">" + name +
+                    "</span>";
+                $(".nav-sign").empty().append(str);
+            }
+        });
+
+        /*
+        data参数含义：
+            tableName 所要找的表名
+        */
+        //获取交友互动分页数
+        dataLost = {
+            "tableName": "interactive"
+        }
+        $.post("/shixun/getIndex", $.param(dataLost), function (result) {
+            var obj = $.parseJSON(result);
+            var str = "";
+            for (var i = 1; i <= obj.index; i++) {
+                str += '<li><a href="javascript:void(0);">' + i + '</a></li>';
+            }
+            $("#ul-inter").empty().append(str);
+            $("#ul-inter a").on("click", function () {
+                var index = this.innerHTML;
+                getInterArticle(index);
+            })
+        });
+        $(getInterArticle(1));
+
+        //获取JSON长度
+        function getJsonLength(json) {
+            var jsonLength = 0;
+            for (var i in json) {
+                jsonLength++;
+            }
+            return jsonLength;
+        }
+
+        //获取一页失物招领帖子
+        function getInterArticle(index) {
+            data = {
+                "index": index
+            }
+            $.post("/shixun/showInter", $.param(data), function (result) {
+                // alert(result);
+                var obj = $.parseJSON(result);
+                // alert(getJsonLength(obj.data));
+                if (obj.msg == "没有更多帖子了!") {
+                    $(".container_content0").empty().text("没有更多帖子了!");
+                } else if (obj.msg == "success") {
+                    //alert(obj.data[0].actId);
+                    //获取一页帖子数目
+                    var length = getJsonLength(obj.data);
+                    //分页内容
+                    var str = "";
+                    //图片个数
+                    var imgCount = 0;
+                    //图片容器
+                    var strSumImg = "";
+                    //图片节点
+                    var strImg = "";
+                    // alert("帖子数目：" + length);
+                    for (i = 0; i < length; i++) {
+                        imgCount = getJsonLength(obj.data[i].pcPath);
+                        if (obj.data[i].pcPath[0] == "") {
+                            imgCount = 0;
+                        }
+                        for (let j = 0; j < imgCount; j ++) {
+                            strImg += '<li><img src="img/user/inter/' + obj.data[i].actId + "-" + (j + 1) +
+                                '.png" alt=""></li>';
+                        }
+                        if (imgCount != 0) {
+                            strSumImg += '<div class="tz-img">' +
+                                '<ul>' +
+                                strImg +
+                                '</ul>'+
+                            '</div>';
+                        }
+                        // console.log(strImg);
+                        str += '<div class="left-tiezi">' +
+                            		'<div class="tz-header">' +
+                            			'<div class="header-topic">' +
+                            				obj.data[i].topic +
+                            			'</div>' +
+                            			'<div class="header-title">' +
+                            				obj.data[i].title +
+                            			'</div>' +
+                            		'</div>' +
+	                            	'<div class="tz-content">' +
+	                            		'<div class="tz-description">' +
+	                            			'<p>&nbsp;&nbsp;' + obj.data[i].description + '</p>' +
+	                            		'</div>' +
+	                            			strSumImg +
+	                            	'</div>' +
+	                            	'<div class="tz-footer">' +
+	                            		'<span>作者：<a href="http://"><i class="icon icon-user"></i>' + obj.data[i].userId +
+	                            			'</a> </span>' +
+	                            		'<span class="like">点赞数：<a href="javascript:void(0)"><i class="icon icon-thumbs-o-up"></i>' + obj.data[i].likeCount + '</a> </span>' +
+	                            		'<span>评论：<i class="icon icon-comments"></i>' + obj.data[i].commentCount + '</span>' +
+	                            		'<span>发布时间：<i class="icon icon-time"></i>' + obj.data[i].time + '</span>' +
+	                            	'</div>' +
+	                            '</div>';
+	                            strSumImg = "";
+	                            strImg = "";
+                    }
+                    $(".center-left-content").empty().append(str);
+                    $(".like a").on("click", function(){
+                    	//alert(parseInt($(this).text()));
+                        $(this).html('<i class="icon icon-thumbs-o-up"></i>' + (1 + parseInt($(this).text())));
+                    });
+                    //console.log(obj.data[0].location + " " + obj.data[0].description);
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="top">
+        <img src="img/top1.jpg" alt="" srcset="">
+    </div>
+    <div class="navigate">
+        <div class="nav-topic">
+            <ul class="nav nav-secondary">
+                <li class="plat-name"><a href="first.html">校内信息分享平台</a></li>
+                <li><a href="first.html">首页</a></li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="activity.html">学生活动<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html">社团风采活动</a></li>
+                        <li><a href="activity.html">学校新闻</a></li>
+                        <li><a href="activity.html">体育赛事</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="exchange.html">学校服务<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="exchange.html">二手交易</a></li>
+                        <li><a href="find.html">失物招领</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="index.html">校园风采<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">教学楼</a></li>
+                        <li><a href="index.html">宿舍</a></li>
+                        <li><a href="index.html">食堂</a></li>
+                        <li><a href="index.html">其他</a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="communicate1.html">交友互动<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="communicate1.html">生活</a></li>
+                        <li><a href="communicate1.html">征婚</a></li>
+                        <li><a href="communicate1.html">学习交流</a></li>
+                        <li><a href="communicate1.html">其他</a></li>
+                    </ul>
+                </li>
+                <li><a href="fatie.html">发帖</a></li>
+            </ul>
+        </div>
+        <div class="nav-help">
+            <div class="nav-search">
+                <div class="input-group">
+                    <div class="input-control search-box search-box-circle has-icon-left has-icon-right search-example"
+                        id="searchboxExample">
+                        <input id="inputSearchExample3" type="search" class="form-control search-input"
+                            placeholder="搜索">
+                        <label for="inputSearchExample3" class="input-control-icon-left search-icon"><i
+                                class="icon icon-search"></i></label>
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button">搜索</button>
+                    </span>
+                </div>
+            </div>
+            <div class="nav-sign">
+                <span class="user">欢迎您！游客</span>
+                <span>您可以</span>
+                <span><a href="register.html">注册</a></span>
+                <span><a href="login.html">登录</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="center-com">
+        <div class="center-left">
+            <div class="center-left-content">
+                <div class="left-tiezi">
+                    <div class="tz-header">
+                        <div class="header-topic">
+                            征婚
+                        </div>
+                        <div class="header-title">
+                            帮同学征nan友
+                        </div>
+                    </div>
+                    <div class="tz-content">
+    
+                        <div class="tz-description">
+                            <p>&nbsp;&nbsp; 96年汉子，178cm69kg，摩羯座，河南人。 今年本科毕业在北京读研，目前1,2年内无结婚打算。 要求对方：172cm以上，不抽烟，</p>
+                        </div>
+                        <div class="tz-img">
+                            <ul>
+                                <li><img src="img/com/bar.png" alt=""></li>
+                                <li><img src="img/com/hanzi.png" alt=""></li>
+                                <li><img src="img/com/keji.png" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tz-footer">
+                        <span>作者：<a href="http://"><i class="icon icon-user"></i>zqf</a> </span>
+                        <span>点赞数：<a href="http://"><i class="icon icon-thumbs-o-up"></i>23</a> </span>
+                        <span>评论：<i class="icon icon-comments"></i>11</span>
+                        <span>发布时间：<i class="icon icon-time"></i>2019-6-23</span>
+                    </div>
+                </div>
+                <div class="left-tiezi">
+                    <div class="tz-header">
+                        <div class="header-topic">
+                            学习交流
+                        </div>
+                        <div class="header-title">
+                            有偿求助论文
+                        </div>
+                    </div>
+                    <div class="tz-content">
+    
+                        <div class="tz-description">
+                            <p>&nbsp;&nbsp; 有心理学研究生或博士吗?有偿求助</p>
+                        </div>
+                    </div>
+                    <div class="tz-footer">
+                        <span>作者：<a href="http://"><i class="icon icon-user"></i>zqf</a> </span>
+                        <span>点赞数：<a href="http://"><i class="icon icon-thumbs-o-up"></i>23</a> </span>
+                        <span>评论：<i class="icon icon-comments"></i>11</span>
+                        <span>发布时间：<i class="icon icon-time"></i>2019-6-23</span>
+                    </div>
+                </div>
+                <div class="left-tiezi">
+                    <div class="tz-header">
+                        <div class="header-topic">
+                            学习交流
+                        </div>
+                        <div class="header-title">
+                            高数期末复习有什么经验吗
+                        </div>
+                    </div>
+                    <div class="tz-content">
+    
+                        <div class="tz-description">
+                            <p>&nbsp;&nbsp; 高数好难啊，听说高数重修老师划了重点，有没有哪位难兄难弟记下来了，求带</p>
+                        </div>
+                        <div class="tz-img">
+                            <ul>
+                                <li><img src="img/com/xiamu.png" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tz-footer">
+                        <span>作者：<a href="http://"><i class="icon icon-user"></i>zqf</a> </span>
+                        <span>点赞数：<a href="http://"><i class="icon icon-thumbs-o-up"></i>23</a> </span>
+                        <span>评论：<i class="icon icon-comments"></i>11</span>
+                        <span>发布时间：<i class="icon icon-time"></i>2019-6-23</span>
+                    </div>
+                </div>
+                <div class="left-tiezi">
+                    <div class="tz-header">
+                        <div class="header-topic">
+                            生活
+                        </div>
+                        <div class="header-title">
+    
+                            要毕业了，可是我喜欢上一个女生怎么办啊！我是女生
+                        </div>
+                    </div>
+                    <div class="tz-content">
+    
+                        <div class="tz-description">
+                            <p>&nbsp;&nbsp; 96年汉子，178cm69kg，摩羯座，河南人。 今年本科毕业在北京读研，目前1,2年内无结婚打算。 要求对方：172cm以上，不抽烟，</p>
+                        </div>
+                    </div>
+                    <div class="tz-footer">
+                        <span>作者：<a href="http://"><i class="icon icon-user"></i>zqf</a> </span>
+                        <span>点赞数：<a href="http://"><i class="icon icon-thumbs-o-up"></i>23</a> </span>
+                        <span>评论：<i class="icon icon-comments"></i>11</span>
+                        <span>发布时间：<i class="icon icon-time"></i>2019-6-23</span>
+                    </div>
+                </div>
+            </div>
+            <div class="page-control">
+                <ul class="pager pager-pills pager-loose" id="ul-inter">
+                    <li class="previous"><a href="your/nice/url">«</a></li>
+                    <li><a href="your/nice/url">1</a></li>
+                    <li class="active"><a href="your/nice/url">2</a></li>
+                    <li><a href="your/nice/url">3</a></li>
+                    <li><a href="your/nice/url">4</a></li>
+                    <li><a href="your/nice/url">5</a></li>
+                    <li><a href="your/nice/url">6</a></li>
+                    <li><a href="your/nice/url">7</a></li>
+                    <li><a href="your/nice/url">8</a></li>
+                    <li class="next"><a href="your/nice/url">»</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="center-right">
+            <div class="top-rank">
+                <div class="top-title"><i class="icon icon-rocket"></i>&nbsp;热帖排行榜</div>
+                <div class="top-content">
+                    <ul>
+                        <li><span class="top-number">1</span><span class="top-topic"><a href="http://">为吃火锅立志考北大</a>
+                            </span></li>
+                        <li><span class="top-number">2</span><span class="top-topic"><a href="http://">被垃圾分类逼疯</a>
+                            </span></li>
+                        <li><span class="top-number">3</span><span class="top-topic"><a href="http://">咒怨将拍电视剧</a>
+                            </span></li>
+                        <li><span class="top-number">4</span><span class="top-topic"><a href="http://">网吧通宵赶作业</a>
+                            </span></li>
+                        <li><span><span class="top-number">5</span><span class="top-topic"><a
+                                        href="http://">在家抽烟或被列为家暴</a> </span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="hot-rank">
+                <div class="hot-title"><i class="icon icon-group"></i>&nbsp; 大家都在搜</div>
+                <div class="hot-content">
+                    <div class="btn-group">
+                        <button type="button" class="btn">找对象</button>
+                        <button type="button" class="btn btn-primary">白色蘑菇云</button>
+                        <button type="button" class="btn btn-warning">曹一家院士</button>
+                        <button type="button" class="btn btn-danger">高考志愿</button>
+                        <button type="button" class="btn btn-success">找研友</button>
+                        <button type="button" class="btn btn-info">宿舍条件</button>
+                        <button type="button" class="btn btn-primary">千与千寻</button>
+                        <button type="button" class="btn btn-warning">招生比例</button>
+                        <button type="button" class="btn btn-danger">sangfor</button>
+                        <button type="button" class="btn btn-success">王牌专业</button>
+                        <button type="button" class="btn btn-success">在职考研</button>
+                        <button type="button" class="btn btn-info">计算机专业</button>
+                        <button type="button" class="btn btn-info">PS后期</button>
+                        <button type="button" class="btn btn-primary">转专业</button>
+                        <button type="button" class="btn btn-warning">毕业照</button>
+                    </div>
+                </div>
+            </div>
+            <div class="bulletin-board">
+                <div class="bulletin-title">公告栏</div>
+                <div class="bulletin-img">
+                    <img src="img/com/saohuang.png" alt="" srcset="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-center">
+            <div class="address">
+                <h3>学校邮编</h3>
+                <p>云塘校区地址：湖南省长沙市（天心区）万家丽南路2段960号 邮编：410114</p>
+                <p>金盆岭校区地址：湖南省长沙市（天心区）赤岭路45号 邮编：410076</p>
+            </div>
+            <div class="shell">
+                <h3>友情链接</h3>
+                <div class="social">
+                    <a href="">教务管理系统</a>
+                    <a href="">网络教学平台</a>
+                    <a href="">英语视听说</a>
+                    <a href="">长理官网</a>
+                </div>
+            </div>
+        </div>
+        <div class="chrick">
+            长理校内信息分享平台，你的网上大学生活圈
+        </div>
+    </div>
+</body>
+
+</html>
